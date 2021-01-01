@@ -26,25 +26,25 @@
         <a href='/logout'><button class='btn btn-primary'>Log-out</button></a>
         <hr>
 <h1>Add/Edit Posts</h1>
-<form name="sentMessage" id="contactForm" action="/edit/{{post.srno}}" method="post" novalidate>
+<form name="sentMessage" id="contactForm" action="/edit/{{srno}}" method="post" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Title</label>
-              <input type="text" class="form-control" placeholder="Enter a Title" id="title" name="title" required data-validation-required-message="Please enter your Title." value={{post.Title}}>
+              <input type="text" class="form-control" placeholder="Enter a Title" id="title" name="title" required data-validation-required-message="Please enter your Title." value="{{post.Title}}">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>TagLine</label>
-              <input type="text" class="form-control" placeholder="Tagline" id="tline" name='tline' required data-validation-required-message="Please enter your Tagline" value={{post.tagline}}>
+              <input type="text" class="form-control" placeholder="Tagline" id="tline" name='tline' required data-validation-required-message="Please enter your Tagline" value="{{post.tagline}}">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
               <label>Slug</label>
-              <input type="text" class="form-control" placeholder="Slug" id="slug" name='slug' required data-validation-required-message="Please enter your slug." value={{post.slug}}>
+              <input type="text" class="form-control" placeholder="Slug" id="slug" name='slug' required data-validation-required-message="Please enter your slug." value="{{post.slug}}">
               <p class="help-block text-danger"></p>
             </div>
           </div>
@@ -59,7 +59,7 @@
            <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Image file</label>
-              <input class="form-control" placeholder="Enter Image" id="img_file" name='img_file' required data-validation-required-message="Please enter your Image" value={{post.img_file}}></input>
+              <input class="form-control" placeholder="Enter Image" id="img_file" name='img_file' required data-validation-required-message="Please enter your Image" value="{{post.img_file}}"></input>
               <p class="help-block text-danger"></p>
             </div>
           </div>

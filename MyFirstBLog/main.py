@@ -2,6 +2,7 @@ from flask import Flask, render_template, request,session,redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_mail import Mail
+import math
 import os
 import json
 from werkzeug.utils import secure_filename
@@ -52,12 +53,35 @@ class Post(db.Model):
     img_file = db.Column(db.String(50), nullable=False)
     date = db.Column(db.String(12), nullable=True)
 
-
+ #Pagintation
+    #first:-prev=_#,next=page+1
+    # middle:-prev=page-1,next=page+1
+    # last:-prev=page-1,next=_#
 
 @app.route("/")
 def index():
-    posts=Post.query.filter_by().all()[0:params['no_of_posts']]
-    return render_template("index.html",params=params,posts=posts)
+    posts = Post.query.filter_by().all()
+    last = math.ceil(len(posts) / int(params['no_of_posts']))
+    page = request.args.get('page')
+    if (not str(page).isnumeric()):
+        page = 1
+    page = int(page)
+    posts = posts[(page - 1) * int(params['no_of_posts']): (page - 1) * int(params['no_of_posts']) + int(
+        params['no_of_posts'])]
+    # Pagination Logic
+    # First
+    if (page == 1):
+        prev = "#"
+        next = "/?page=" + str(page + 1)
+    elif (page == last):
+        prev = "/?page=" + str(page - 1)
+        next = "#"
+    else:
+        prev = "/?page=" + str(page - 1)
+        next = "/?page=" + str(page + 1)
+
+
+    return render_template("index.html",params=params,posts=posts,prev=prev,next=next)
 
 @app.route('/dashboard',methods=["GET","POST"])
 def dashboard():
@@ -94,7 +118,7 @@ def edit(srno):
                 db.session.commit()
             else:
                 post=Post.query.filter_by(srno=srno).first()
-                post.title=box_title
+                post.Title=box_title
                 post.slug=slug
                 post.content=content
                 post.tagline=tline
@@ -104,7 +128,7 @@ def edit(srno):
 
                 return redirect('/edit/'+srno)
         post=Post.query.filter_by(srno=srno).first()
-        return render_template('edit.html',params=params,post=post)
+        return render_template('edit.html',params=params,post=post,srno=srno)
 
 @app.route("/post/<string:post_slug>",methods=["GET"])
 def post_route(post_slug):
